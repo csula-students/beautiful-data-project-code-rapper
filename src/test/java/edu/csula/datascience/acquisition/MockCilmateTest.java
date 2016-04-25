@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import com.google.common.collect.Lists;
 
-import edu.csula.datascience.Model.Climate;
+import edu.csula.datascience.model.Climate;
 
 public class MockCilmateTest {
 	

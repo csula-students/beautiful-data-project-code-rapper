@@ -3,7 +3,7 @@ package edu.csula.datascience.acquisition;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import edu.csula.datascience.Model.Climate;
+import edu.csula.datascience.model.Climate;
 
 public class MockClimateCollector implements Collector<Climate, Climate> {
 
