@@ -8,6 +8,8 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import edu.csula.datascience.model.Agriculture;
 
 /**
@@ -36,17 +38,19 @@ public class AgricultureCollector implements Collector<Agriculture, Agriculture>
     	
     	for (Agriculture a : src)
     	{
-    		if(a.getCountry_Code()!= null && a.getElement_Code()!= null && a.getItem_Code()!=null && a.getYear_Code()!=null && a.getValue()!=null)
+//    		if(a.getCountry_Code()!= null && a.getElement_Code()!= null && a.getItem_Code()!=null && a.getYear_Code()!=null && a.getValue()!=null)
+    		//if(!a.getFlag().equals("M"))
+    		if(a.getFlag().equals("M") || a.getCountry_Code()== null || a.getElement_Code()== null || a.getItem_Code()==null || a.getYear_Code()==null || a.getValue()==null || a.getValue().equals("0"))
     		{
-    			list.add(a);
+    			System.out.println("Invalid data record : "+a.getSno());
     		}
     		else
     		{
-    			System.out.println("Invalid data record : "+a.getSno());
+    			list.add(a);
     		}    		
     	}
     	
-    	System.out.println("Data Mungee Done...");
+    	System.out.println("Data Mungee Done..."+list.size()+" Records" );
     	
         return list;
     }
@@ -54,33 +58,49 @@ public class AgricultureCollector implements Collector<Agriculture, Agriculture>
 
     public void save(Collection<Agriculture> data) {
 
-    	List<Document> documents = new ArrayList<Document>();
+//    	List<Document> documents = new ArrayList<Document>();
     	
-    	for(Agriculture a :  data)
-    	{
-    		   	
-	    	Document document = new Document();
-	    	
-	        document.put("Sno", a.getSno());
-	       	document.put("Country Code", a.getCountry_Code());
-	       	document.put("Country", a.getCountry());
-	       	document.put("Item Code", a.getItem_Code());
-	       	document.put("Item", a.getItem());
-	       	document.put("Element Code", a.getElement_Code());
-	       	document.put("Element", a.getElement());
-	       	document.put("Year Code", a.getYear_Code());
-	       	document.put("Year", a.getYear());
-	       	document.put("Unit", a.getUnit());
-	       	document.put("Value", a.getValue());
-	       	document.put("Flag", a.getFlag());
-	       	
-	       	collection.insertOne(document);
-	       	
-	       	documents.add(document);
-	       	
-    	}
+    	List<Document> documents = data.stream()
+				.map(item -> new Document().append("Sno", item.getSno())
+						.append("Country Code", item.getCountry_Code())
+						.append("Country", item.getCountry())
+						.append("Item Code", item.getItem_Code())
+						.append("Item", item.getItem())
+						.append("Element Code", item.getElement_Code())
+						.append("Element", item.getElement())
+						.append("Year Code", item.getYear_Code())
+						.append("Year", item.getYear())
+						.append("Unit", item.getUnit())
+						.append("Value", item.getValue())
+						.append("Flag", item.getFlag()))
+				.collect(Collectors.toList());
     	
-    	System.out.println("");
+    	collection.insertMany(documents);
+    	
+//    	for(Agriculture a :  data)
+//    	{
+//    		   	
+//	    	Document document = new Document();
+//	    	
+//	        document.put("Sno", a.getSno());
+//	       	document.put("Country Code", a.getCountry_Code());
+//	       	document.put("Country", a.getCountry());
+//	       	document.put("Item Code", a.getItem_Code());
+//	       	document.put("Item", a.getItem());
+//	       	document.put("Element Code", a.getElement_Code());
+//	       	document.put("Element", a.getElement());
+//	       	document.put("Year Code", a.getYear_Code());
+//	       	document.put("Year", a.getYear());
+//	       	document.put("Unit", a.getUnit());
+//	       	document.put("Value", a.getValue());
+//	       	document.put("Flag", a.getFlag());
+//	       	
+//	       	collection.insertOne(document);
+//	       	documents.add(document);
+	       	
+//    	}
+    	
+    	System.out.println("Inserted");
         
 //        collection.insertMany(documents);
     }
