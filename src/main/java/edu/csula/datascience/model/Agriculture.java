@@ -1,24 +1,25 @@
 package edu.csula.datascience.model;
 
 public class Agriculture {
-	
+
 	private long Sno;
-	private String Country_Code;	
-	private String Country;	
-	private String Item_Code;	
-	private String Item;	
+	private String Country_Code;
+	private String Country;
+	private String Item_Code;
+	private String Item;
 	private String Element_Code;
 	private String Element;
-	private String Year_Code;	
-	private String Year;	
-	private String Unit;	
-	private String Value;	
+	private String Year_Code;
+	private String Year;
+	private String Unit;
+	private String Value;
 	private String Flag;
-	
-	public Agriculture(long sno, String country_Code, String country, String item_Code, String item, String element_Code,
-			String element, String year_Code, String year, String unit, String value, String flag) {
+
+	public Agriculture(long sno, String country_Code, String country, String item_Code, String item,
+			String element_Code, String element, String year_Code, String year, String unit, String value,
+			String flag) {
 		super();
-		Sno =sno;
+		Sno = sno;
 		Country_Code = country_Code;
 		Country = country;
 		Item_Code = item_Code;
@@ -31,17 +32,20 @@ public class Agriculture {
 		Value = value;
 		Flag = flag;
 	}
-	
+
+	public static Agriculture build(Agriculture data) {
+		return new Agriculture(data.getSno(), data.getCountry_Code(), data.getCountry(), data.getItem_Code(),
+				data.getItem(), data.getElement_Code(), data.getElement(), data.getYear_Code(), data.getYear(),
+				data.getUnit(), data.getValue(), data.getFlag());
+	}
 
 	public long getSno() {
 		return Sno;
 	}
 
-
 	public void setSno(long sno) {
 		Sno = sno;
 	}
-
 
 	public String getCountry_Code() {
 		return Country_Code;
@@ -130,9 +134,5 @@ public class Agriculture {
 	public void setFlag(String flag) {
 		Flag = flag;
 	}
-	
-	
-	
-
 
 }
