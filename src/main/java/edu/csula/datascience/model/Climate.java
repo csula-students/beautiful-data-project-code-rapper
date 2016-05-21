@@ -15,6 +15,11 @@ public class Climate {
 		AvgTempUnc = avgTempUnc;
 		this.country = country;
 	}
+	
+	public static Climate build(Climate data) {
+		return new Climate(data.getDt(), data.getAverageTemperature(), data.getAvgTempUnc(), data.getCountry());
+	}
+
 
 
 	public String getDt() {

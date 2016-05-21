@@ -7,7 +7,7 @@ import com.google.common.collect.Lists;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.ObjectMapper;
 
-import edu.csula.datascience.Model.Climate;
+import edu.csula.datascience.model.Climate;
 
 public class MockClimateSource implements Source<Climate> {
 
