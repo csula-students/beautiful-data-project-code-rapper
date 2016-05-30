@@ -33,7 +33,7 @@ public class climateSource implements Source<List<Climate>>{
 	@Override
 	public Collection<List<Climate>> next() {
 		// TODO Auto-generated method stub'
-		List<Climate> climateList= Lists.newArrayList();
+		List<Climate> climateList= new ArrayList<Climate>();
 		
 		List<String> countries = new ArrayList();
 		List<List<Climate>> climate_climateList = new ArrayList<List<Climate>>();
@@ -42,6 +42,8 @@ public class climateSource implements Source<List<Climate>>{
 		try {
 			Reader in = new FileReader(filename);
 			Iterable<CSVRecord> records = CSVFormat.EXCEL.withHeader().parse(in);
+			
+			System.out.println("Climate Start ...");
 			
 			for (CSVRecord record : records) {
 				i++;
@@ -59,16 +61,20 @@ public class climateSource implements Source<List<Climate>>{
 				Climate climateValue = new Climate(date,averageTemperature,averageTemperatureUncertainty,country);
 				climateList.add(climateValue);
 				
-				if(climateList.size() == 2796493 )
+				if(climateList.size() == 20000 )
 				{
-				climate_climateList.add(climateList);
-				climateList.clear();
+					i++;
+					climate_climateList.add(climateList);
+					climateList= new ArrayList<Climate>();
+//					climateList.clear();
+					System.out.println("Climate Set : "+i);
 			}
 				
 				
-				System.out.println(i);
+				
 			}
 			
+			System.out.println("Climate end ...");
 			
 			
 		} catch (FileNotFoundException e) {

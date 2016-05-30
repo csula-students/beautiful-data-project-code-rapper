@@ -24,7 +24,7 @@ public class AgricultureCollector implements Collector<Agriculture, Agriculture>
         mongoClient = new MongoClient();
 
         // select `mydata` as testing database
-        database = mongoClient.getDatabase("mydata");
+        database = mongoClient.getDatabase("bgdata");
 
         // select collection by name `agriculture`
         collection = database.getCollection("agriculture");
@@ -34,13 +34,12 @@ public class AgricultureCollector implements Collector<Agriculture, Agriculture>
     	
     	ArrayList<Agriculture> list = new ArrayList<Agriculture>(); 
     	
-    	System.out.println("Data Mungee Started");
+//    	System.out.println("Data Mungee Started");
     	
     	for (Agriculture a : src)
     	{
-//    		if(a.getCountry_Code()!= null && a.getElement_Code()!= null && a.getItem_Code()!=null && a.getYear_Code()!=null && a.getValue()!=null)
-    		//if(!a.getFlag().equals("M"))
-    		if(a.getFlag().equals("M") || a.getCountry_Code()== null || a.getElement_Code()== null || a.getItem_Code()==null || a.getYear_Code()==null || a.getValue()==null || a.getValue().equals("0"))
+    		//if(a.getCountry_Code()!= null && a.getElement_Code()!= null && a.getItem_Code()!=null && a.getYear_Code()!=null && a.getValue()!=null)
+    		if(a.getCountry_Code().equals("") || a.getElement_Code().equals("") || a.getItem_Code().equals("") || a.getYear_Code().equals("") || a.getValue().equals("") || a.getFlag().equals("M"))
     		{
     			System.out.println("Invalid data record : "+a.getSno());
     		}
@@ -50,7 +49,7 @@ public class AgricultureCollector implements Collector<Agriculture, Agriculture>
     		}    		
     	}
     	
-    	System.out.println("Data Mungee Done..."+list.size()+" Records" );
+    	System.out.println("Data Mungee Done..."+list.size());
     	
         return list;
     }
@@ -75,8 +74,6 @@ public class AgricultureCollector implements Collector<Agriculture, Agriculture>
 						.append("Flag", item.getFlag()))
 				.collect(Collectors.toList());
     	
-    	collection.insertMany(documents);
-    	
 //    	for(Agriculture a :  data)
 //    	{
 //    		   	
@@ -96,12 +93,14 @@ public class AgricultureCollector implements Collector<Agriculture, Agriculture>
 //	       	document.put("Flag", a.getFlag());
 //	       	
 //	       	collection.insertOne(document);
+//	       	
 //	       	documents.add(document);
-	       	
+//	       	
 //    	}
     	
-    	System.out.println("Inserted");
-        
-//        collection.insertMany(documents);
+//    	System.out.println("");
+    	
+    	collection.insertMany(documents);
+
     }
 }
