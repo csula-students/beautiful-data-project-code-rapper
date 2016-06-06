@@ -129,6 +129,7 @@ public class DbConnect {
         	
         	BasicDBObject whereQuery = new BasicDBObject();
 //    	    whereQuery.put("Country", "India");
+        	whereQuery.put("Sno", new Document("$gt",351727));//137062
     	    whereQuery.put("Element Code", "5510");
         	
            	iterable = collection.find(whereQuery);

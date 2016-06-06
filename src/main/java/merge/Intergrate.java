@@ -269,7 +269,10 @@ public class Intergrate {
 			
 			if (p.getO_XValue()!=null && p.getO_XValue_p_10()!=null)
 			{
-				p.setO_per_inc((double) Math.round((((p.getO_XValue()-p.getO_XValue_p_10())/p.getO_XValue_p_10())*100)));
+				if(p.getO_XValue()>0 && p.getO_XValue_p_10()>0){
+					p.setO_per_inc((double) (((p.getO_XValue()-p.getO_XValue_p_10())/p.getO_XValue_p_10())*100));
+				}
+				
 			}
 			
 			
@@ -284,7 +287,11 @@ public class Intergrate {
 			
 			if (p.getW_XValue()!=null && p.getW_XValue_P_10()!=null)
 			{
-				p.setW_per_inc((double) Math.round((((p.getW_XValue()-p.getW_XValue_P_10())/p.getW_XValue_P_10())*100)));
+				if (p.getW_XValue()>(-20) && p.getW_XValue_P_10()>(-20))
+				{
+					p.setW_per_inc((double)(((p.getW_XValue()-p.getW_XValue_P_10())/p.getW_XValue_P_10())*100));
+				}
+				
 			}
 			total_count++;
 			products.add(p);
