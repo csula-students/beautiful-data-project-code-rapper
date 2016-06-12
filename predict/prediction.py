@@ -13,7 +13,7 @@ with open('dataset1.tsv') as f:
 print("row count in input file is: ", len(rowlist))
 # print(rowlist[:1])
 
-# rowlist = rowlist[:500]
+rowlist = rowlist[:500]
 print("applying the problem only for: ", len(rowlist), " rows")
 
 data = pd.DataFrame({
@@ -44,6 +44,7 @@ print("cleaning up null value rows for the essential fields")
 data = data[(data.Country != 'null') & (data.Year != 'null') & (data.tp10 != 'null')  & (data.tp10 != '0') & (data.tp5 != 'null')  & (data.tp5 != '0') & (data.tp1 != 'null')  & (data.tp1 != '0') & (data.t != 'null')  & (data.t != '0') & (data.item != 'null')  & (data.op10 != 'null') & (data.op10 != '0') & (data.op5 != 'null') & (data.op5 != '0') & (data.op1 != 'null') & (data.op1 != '0') & (data.o != 'null') & (data.o != '0')]
 print("total rows in the dataframe: ",len(data))
 print("making category columns for country and item")
+detail = data[["Country","item"]]
 data["Country"] = data["Country"].astype('category')
 data["item"] = data["item"].astype('category')
 # print(data[:3])
@@ -208,6 +209,22 @@ print "final prediction"
 fulldata = pd.concat([data_train, data_predict])
 print(len(fulldata.index))
 # print(fulldata[:3])
+
+# df1['B'].cat.categories
+
+# fulldata["Country"] = fulldata["Country"].astype('string')
+# # fulldata["item"] = fulldata["item"].cat.categories    fillna("a")
+# # fulldata.fillna("Country")
+# fulldata.categories
+
+fulldata["Country"] = detail["Country"]
+fulldata["item"] = detail["item"]
+
+# fulldata = pd.concat([detail, fulldata], axis=1)
+print(len(fulldata.index))
+
+print(fulldata[:3])
+
 
 
 
