@@ -13,7 +13,7 @@ import com.mongodb.connection.Stream;
 
 import edu.csula.datascience.model.Climate;
 
-public class climateCollector implements Collector<Climate,Climate> {
+public class climateCollector implements Collector<Climate, Climate> {
 
 	MongoClient mongoClient;
 	MongoDatabase database;
@@ -22,32 +22,34 @@ public class climateCollector implements Collector<Climate,Climate> {
 	public climateCollector() {
 
 		mongoClient = new MongoClient();
-		database = mongoClient.getDatabase("mydb");
+		database = mongoClient.getDatabase("bgdata");
 		collection = database.getCollection("climate");
 	}
 
 	@Override
-	public Collection<Climate> mungee(Collection<Climate> climateList) {
-		// TODO Auto-generated method stub
-		return climateList;
+	public Collection<Climate> mungee(Collection<Climate> src) {
+
+		return src.stream()
+				.filter(data -> !data.getCountry().equals("") && !data.getAverageTemperature().equals("")
+						&& !data.getAvgTempUnc().equals("") && !data.getCountry().equals(""))
+				.map(Climate::build).collect(Collectors.toList());
+
 	}
 
 	@Override
-	public void save( Collection<Climate> climateList) {
+	public void save(Collection<Climate> climateList) {
 
 		System.out.println("save function");
-		
-	//	System.out.println("Data size "+climateList.size());
-		
-		
+
+		// System.out.println("Data size "+climateList.size());
+
 		List<Document> documents = climateList.stream()
 				.map(item -> new Document().append("dt", item.getDt())
-						.append("AverageTemperature", item.getAverageTemperature())
-						.append("AverageTemperatureUncertainity", item.getAvgTempUnc()))
+						.append("Country", item.getCountry())
+						.append("AverageTemperature", Double.parseDouble(item.getAverageTemperature()))
+						.append("AverageTemperatureUncertainity", Double.parseDouble(item.getAvgTempUnc())))
 				.collect(Collectors.toList());
 
-		
-		
 		collection.insertMany(documents);
 
 	}

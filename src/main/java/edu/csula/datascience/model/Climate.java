@@ -1,5 +1,8 @@
 package edu.csula.datascience.model;
 
+//import edu.csula.datascience.acquisition.MockData;
+//import edu.csula.datascience.acquisition.SimpleModel;
+
 public class Climate {
 
 	String dt;
@@ -15,11 +18,6 @@ public class Climate {
 		AvgTempUnc = avgTempUnc;
 		this.country = country;
 	}
-	
-	public static Climate build(Climate data) {
-		return new Climate(data.getDt(), data.getAverageTemperature(), data.getAvgTempUnc(), data.getCountry());
-	}
-
 
 
 	public String getDt() {
@@ -61,7 +59,9 @@ public class Climate {
 		this.country = country;
 	}
 	
-	
+	public static Climate build(Climate data) {
+        return new Climate(data.getDt(), data.getAverageTemperature(),data.getAvgTempUnc(),data.getCountry());
+    }
 }
 
 
